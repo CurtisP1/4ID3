@@ -37,6 +37,24 @@ void loop() {
   float tempC = ((175.72 * temp) / 65536.0) - 46.85;
   Serial.println("Temperature: " + String(tempC) + " degC");
 
+  //Humidity sensor
+  Wire.beginTransmission(ADDR);
+  Wire.write(HUM_CMD);
+  Wire.endTransmission();
+  delay(100);
+  
+  Wire.requestFrom(ADDR, 2);
+
+  char Data[2];
+  if(Wire.available() == 2){
+    Data[0] = Wire.read();
+    Data[1] = Wire.read();
+  }
+
+  float raw_humidity = ((Data[0] * 256.0) + Data[1]);
+  float humidity = ((125 * raw_humidity)/65536.0) - 6;
+  Serial.println("Humidity: " + String(humidity) + "%");
+
   //Sample light sensor
   AsyncAPDS9306Data lightData = lightSensor.syncLuminosityMeasurement();
   
@@ -47,7 +65,7 @@ void loop() {
 
   //Format data as a JSON string
   String sendData = "{ \"" + groupName + "\": { \"" + deviceName + "\": { \"Temp\": \"" 
-      + String(tempC) + "\", \"Luminosity\": \"" + String(lux) + "\" } } }" + '\n';
+      + String(tempC) + "\", \"Humidity\":\"" + String(humidity)+ "\", \"Luminosity\": \"" + String(lux) + "\" } } }" + '\n';
       
   Serial.println("Prepared bluetooth message: " + sendData);
   
