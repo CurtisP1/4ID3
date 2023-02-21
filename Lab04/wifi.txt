@@ -1,0 +1,9 @@
+Gateway EUI58-A0-CB-FF-FE-80-3F-39
+WiFi AP MAC58:A0:CB:80:3F:39
+WiFi AP PassLn7oRt7C
+WiFi STA MAC98:CD:AC:17:61:72
+Serial NumberTBMH100915004726
+MFG date2021-06-19 21:15:56
+FW Build2020-05-07 16:03:53
+FW Version2.0.4
+Core Version2.0.4(minihub/debug)
